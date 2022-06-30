@@ -9,9 +9,6 @@ app = Flask(__name__)
 
 @app.route('/users')
 def get_users():
-  completed = request.args.get('completed')
-  title = request.args.get('title')
-
   result = {"total_items": 0, "data": []}
   with open('users.json', 'r') as f:
     users = json.loads(f.read())
