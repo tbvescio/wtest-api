@@ -1,7 +1,5 @@
 import json
 from flask import Flask, jsonify, request
-from numpy import take
-from sqlalchemy import true
 app = Flask(__name__)
 
 #TODO: validate params / sanitize input
