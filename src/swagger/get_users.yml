@@ -1,0 +1,60 @@
+Returns all Users
+---
+tags:
+    - Users
+definitions:
+    User:
+        type: object
+        properties:
+            username:
+                type: string
+            website:
+                type: string
+            address:
+                type: object
+                properties:
+                    city:
+                        type: string
+                    geo:
+                        type: object
+                        properties:
+                            lat:
+                                type: string
+                            lng:
+                                type: string
+                    street:
+                        type: string
+                    suite:
+                        type: string
+                    zipcode:
+                        type: string
+            company:
+                type: object
+                properties:
+                    bs:
+                        type: string
+                    catchPhrase:
+                        type: string
+                    name:
+                        type: string
+            email:
+                type: string
+            id:
+                type: integer
+            name:
+                type: string
+            phone:
+                type: string
+responses:
+    200:
+        description: Array with all users
+        schema:
+            properties:
+                total_items:
+                    type: number
+                data:
+                    type: array
+                    items:
+                        $ref: '#/definitions/User'
+    500:
+        description: Server Error

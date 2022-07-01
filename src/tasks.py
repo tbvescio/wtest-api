@@ -4,12 +4,15 @@ from flask.json import jsonify
 from schema import Schema, SchemaError, Or
 from pathlib import Path
 from src.constants.http_status_codes import bad_request, is_success, server_error
+from flasgger import swag_from
+
 
 TASKS_PATH = Path(__file__).parent / "data/tasks.json"
 tasks = Blueprint("tasks", __name__)
 
 
 @tasks.route('/tasks')
+@swag_from('./swagger/get_tasks.yml')
 def get_tasks():
     try:
         completed = request.args.get('completed')
@@ -42,7 +45,8 @@ def get_tasks():
 
 
 @tasks.route('/tasks/<taskId>')
-def get_tasks_by_id(taskId):
+@swag_from('./swagger/get_task_by_id.yml')
+def get_task_by_id(taskId):
     try:
         Schema(int).validate(taskId)
         result = {}
@@ -62,6 +66,7 @@ def get_tasks_by_id(taskId):
 
 
 @tasks.route('/users/<userId>/tasks')
+@swag_from('./swagger/get_tasks_by_userId.yml')
 def get_tasks_by_userId(userId):
     try:
         Schema(int).validate(userId)

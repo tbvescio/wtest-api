@@ -1,0 +1,25 @@
+Fetch all Tasks by its userId
+---
+tags:
+    - Tasks
+parameters:
+    - name: userId
+      in: path
+      required: true
+      type: number
+      description:  userId to fetch Tasks from
+responses:
+    200:
+        description: All Tasks that have the given userId
+        schema:
+            properties:
+                total_items:
+                    type: number
+                data:
+                    type: array
+                    items:
+                        $ref: '#/definitions/Task'
+    400:
+        description: Bad request
+    500:
+        description: Server Error

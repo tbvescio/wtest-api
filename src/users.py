@@ -1,36 +1,17 @@
 from src.constants.http_status_codes import bad_request, is_success, not_found, server_error
 import json
-from flask import Blueprint, request
-from flask.json import jsonify
+from flask import Blueprint
 from schema import Schema, SchemaError
 from pathlib import Path
+from flasgger import swag_from
 
 USERS_PATH = Path(__file__).parent / "data/users.json"
 users = Blueprint("users", __name__)
 
 
 @users.route('/users')
+@swag_from('./swagger/get_users.yml')
 def get_users():
-    """Retrieves all users
-    ---
-    definitions:
-      Palette:
-        type: object
-        properties:
-          palette_name:
-            type: array
-            items:
-              $ref: '#/definitions/Color'
-      Color:
-        type: string
-    responses:
-      200:
-        description: A list of colors (may be filtered by palette)
-        schema:
-
-        examples:
-          rgb: ['red', 'green', 'blue']
-    """
     try:
         result = {"total_items": 0, "data": []}
         with open(USERS_PATH, 'r') as f:
@@ -43,6 +24,7 @@ def get_users():
 
 
 @users.route('/users/<userId>')
+@swag_from('./swagger/get_user_by_id.yml')
 def get_user_by_id(userId):
     try:
         Schema(int).validate(userId)

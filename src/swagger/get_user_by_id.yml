@@ -1,0 +1,21 @@
+Fetch one User by its ID
+---
+tags:
+    - Users
+parameters:
+    - name: userId
+      in: path
+      required: true
+      type: number
+      description: userId to fetch
+responses:
+    200:
+        description: User Object
+        schema:
+            $ref: '#/definitions/User'
+    400:
+        description: Bad request
+    404:
+        description: User not found
+    500:
+        description: Server Error

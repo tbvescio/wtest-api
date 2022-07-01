@@ -1,0 +1,42 @@
+Returns all Tasks
+---
+tags:
+    - Tasks
+definitions:
+    Task:
+        type: object
+        properties:
+            completed:
+                type: boolean
+            id:
+                type: integer
+            title:
+                type: string
+            user_id:
+                type: integer
+parameters:
+    - name: completed
+      in: path
+      required: false
+      type: boolean
+      description: fetch Tasks based on their completed status
+    - name: title
+      in: path
+      required: false
+      type: string
+      description: fetch Tasks based on if the title contais a certain value
+responses:
+    200:
+        description: Array with all Tasks that matches the conditions
+        schema:
+            properties:
+                total_items:
+                    type: number
+                data:
+                    type: array
+                    items:
+                        $ref: '#/definitions/Task'
+    400:
+        description: Bad request
+    500:
+        description: Server Error
