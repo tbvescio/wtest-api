@@ -27,7 +27,8 @@ def get_users():
 @swag_from('./swagger/get_user_by_id.yml')
 def get_user_by_id(userId):
     try:
-        Schema(int).validate(userId)
+        if not userId.isnumeric():
+            raise SchemaError(userId)
 
         result = {}
         with open(USERS_PATH, 'r') as f:
@@ -35,11 +36,9 @@ def get_user_by_id(userId):
             for user in users:
                 if user["id"] == int(userId):
                     result = user
-                    break
+                    return is_success(result)
 
-        if result == {}:
-            return not_found()
-        return is_success(result)
+        return not_found()
     except SchemaError:
         return bad_request()
     except:

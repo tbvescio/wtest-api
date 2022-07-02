@@ -3,7 +3,7 @@ from flask import Blueprint, request
 from flask.json import jsonify
 from schema import Schema, SchemaError, Or
 from pathlib import Path
-from src.constants.http_status_codes import bad_request, is_success, server_error
+from src.constants.http_status_codes import bad_request, is_success, not_found, server_error
 from flasgger import swag_from
 
 
@@ -32,7 +32,7 @@ def get_tasks():
                     continue
                 if completed == "false" and task["completed"] == True:
                     continue
-                if title not in task["title"]:
+                if title and title not in task["title"]:
                     continue
 
                 result["data"].append(task)
@@ -48,7 +48,8 @@ def get_tasks():
 @swag_from('./swagger/get_task_by_id.yml')
 def get_task_by_id(taskId):
     try:
-        Schema(int).validate(taskId)
+        if not taskId.isnumeric():
+            raise SchemaError(taskId)
         result = {}
 
         with open(TASKS_PATH, 'r') as f:
@@ -57,8 +58,8 @@ def get_task_by_id(taskId):
             for task in tasks:
                 if task["id"] == int(taskId):
                     result = task
-                    break
-        return is_success(result)
+                    return is_success(result)
+        return not_found()
     except SchemaError:
         return bad_request()
     except:
@@ -69,7 +70,12 @@ def get_task_by_id(taskId):
 @swag_from('./swagger/get_tasks_by_userId.yml')
 def get_tasks_by_userId(userId):
     try:
-        Schema(int).validate(userId)
+        if not userId.isnumeric():
+            raise SchemaError(userId)
+        completed = request.args.get('completed')
+        Schema(Or("true", "false", None)).validate(completed)
+        title = request.args.get('title')
+
         result = {"total_items": 0, "data": []}
 
         with open(TASKS_PATH, 'r') as f:
@@ -77,6 +83,13 @@ def get_tasks_by_userId(userId):
 
             for task in tasks:
                 if task["user_id"] == int(userId):
+                    if completed == "true" and task["completed"] == False:
+                        continue
+                    if completed == "false" and task["completed"] == True:
+                        continue
+                    if title and title not in task["title"]:
+                        continue
+
                     result["data"].append(task)
 
         result["total_items"] = len(result["data"])
