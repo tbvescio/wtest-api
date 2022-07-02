@@ -50,8 +50,8 @@ def get_task_by_id(taskId):
     try:
         if not taskId.isnumeric():
             raise SchemaError(taskId)
+        
         result = {}
-
         with open(TASKS_PATH, 'r') as f:
             tasks = json.loads(f.read())
 
@@ -77,7 +77,6 @@ def get_tasks_by_userId(userId):
         title = request.args.get('title')
 
         result = {"total_items": 0, "data": []}
-
         with open(TASKS_PATH, 'r') as f:
             tasks = json.loads(f.read())
 
