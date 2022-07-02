@@ -1,1 +1,1 @@
-web: gunicorn app:src:deploy:prod:run --log-file=-
+web: gunicorn src.deploy.prod.run:application --log-file=-
