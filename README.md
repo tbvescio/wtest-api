@@ -16,3 +16,4 @@ To use the Swagger UI
 - Have a way to create/delete Users and Tasks
 - Prod should use a real WSGI
 - Search for a better way to validate params and other external variables
+- Implement pagination
