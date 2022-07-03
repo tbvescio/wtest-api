@@ -1,285 +1,291 @@
 {
-    "definitions": {
-        "Task": {
-            "properties": {
-                "completed": {
-                    "type": "boolean"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "user_id": {
-                    "type": "integer"
-                }
-            },
-            "type": "object"
-        },
-        "User": {
-            "properties": {
-                "address": {
-                    "properties": {
-                        "city": {
-                            "type": "string"
-                        },
-                        "geo": {
-                            "properties": {
-                                "lat": {
-                                    "type": "string"
-                                },
-                                "lng": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        },
-                        "street": {
-                            "type": "string"
-                        },
-                        "suite": {
-                            "type": "string"
-                        },
-                        "zipcode": {
-                            "type": "string"
-                        }
-                    },
-                    "type": "object"
-                },
-                "company": {
-                    "properties": {
-                        "bs": {
-                            "type": "string"
-                        },
-                        "catchPhrase": {
-                            "type": "string"
-                        },
-                        "name": {
-                            "type": "string"
-                        }
-                    },
-                    "type": "object"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "phone": {
-                    "type": "string"
-                },
-                "username": {
-                    "type": "string"
-                },
-                "website": {
-                    "type": "string"
-                }
-            },
-            "type": "object"
+  "definitions": {
+    "Task": {
+      "properties": {
+        "completed": {
+          "type": "boolean"
+        }, 
+        "id": {
+          "type": "integer"
+        }, 
+        "title": {
+          "type": "string"
+        }, 
+        "user_id": {
+          "type": "integer"
         }
-    },
-    "info": {
-        "description": "powered by Flasgger",
-        "termsOfService": "/tos",
-        "title": "A swagger API",
-        "version": "0.0.1"
-    },
-    "paths": {
-        "/tasks": {
-            "get": {
-                "parameters": [
-                    {
-                        "description": "fetch Tasks based on their completed status",
-                        "in": "path",
-                        "name": "completed",
-                        "required": false,
-                        "type": "boolean"
-                    },
-                    {
-                        "description": "fetch Tasks based on if the title contais a certain value",
-                        "in": "path",
-                        "name": "title",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Array with all Tasks that matches the conditions",
-                        "schema": {
-                            "properties": {
-                                "data": {
-                                    "items": {
-                                        "$ref": "#/definitions/Task"
-                                    },
-                                    "type": "array"
-                                },
-                                "total_items": {
-                                    "type": "number"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    },
-                    "500": {
-                        "description": "Server Error"
-                    }
-                },
-                "summary": "Returns all Tasks",
-                "tags": ["Tasks"]
+      }, 
+      "type": "object"
+    }, 
+    "User": {
+      "properties": {
+        "address": {
+          "properties": {
+            "city": {
+              "type": "string"
+            }, 
+            "geo": {
+              "properties": {
+                "lat": {
+                  "type": "string"
+                }, 
+                "lng": {
+                  "type": "string"
+                }
+              }, 
+              "type": "object"
+            }, 
+            "street": {
+              "type": "string"
+            }, 
+            "suite": {
+              "type": "string"
+            }, 
+            "zipcode": {
+              "type": "string"
             }
-        },
-        "/tasks/{taskId}": {
-            "get": {
-                "parameters": [
-                    {
-                        "description": "taskId to fetch",
-                        "in": "path",
-                        "name": "taskId",
-                        "required": true,
-                        "type": "number"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Task Object",
-                        "schema": {
-                            "$ref": "#/definitions/Task"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    },
-                    "404": {
-                        "description": "Task not found"
-                    },
-                    "500": {
-                        "description": "Server Error"
-                    }
-                },
-                "summary": "Fetch one Task by its ID",
-                "tags": ["Tasks"]
+          }, 
+          "type": "object"
+        }, 
+        "company": {
+          "properties": {
+            "bs": {
+              "type": "string"
+            }, 
+            "catchPhrase": {
+              "type": "string"
+            }, 
+            "name": {
+              "type": "string"
             }
-        },
-        "/users": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Array with all users",
-                        "schema": {
-                            "properties": {
-                                "data": {
-                                    "items": {
-                                        "$ref": "#/definitions/User"
-                                    },
-                                    "type": "array"
-                                },
-                                "total_items": {
-                                    "type": "number"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Server Error"
-                    }
-                },
-                "summary": "Returns all Users",
-                "tags": ["Users"]
-            }
-        },
-        "/users/{userId}": {
-            "get": {
-                "parameters": [
-                    {
-                        "description": "userId to fetch",
-                        "in": "path",
-                        "name": "userId",
-                        "required": true,
-                        "type": "number"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "User Object",
-                        "schema": {
-                            "$ref": "#/definitions/User"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    },
-                    "404": {
-                        "description": "User not found"
-                    },
-                    "500": {
-                        "description": "Server Error"
-                    }
-                },
-                "summary": "Fetch one User by its ID",
-                "tags": ["Users"]
-            }
-        },
-        "/users/{userId}/tasks": {
-            "get": {
-                "parameters": [
-                    {
-                        "description": "userId to fetch Tasks from",
-                        "in": "path",
-                        "name": "userId",
-                        "required": true,
-                        "type": "number"
-                    },
-                    {
-                        "description": "fetch Tasks based on their completed status",
-                        "in": "path",
-                        "name": "completed",
-                        "required": false,
-                        "type": "boolean"
-                    },
-                    {
-                        "description": "fetch Tasks based on if the title contais a certain value",
-                        "in": "path",
-                        "name": "title",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "All Tasks that have the given userId",
-                        "schema": {
-                            "properties": {
-                                "data": {
-                                    "items": {
-                                        "$ref": "#/definitions/Task"
-                                    },
-                                    "type": "array"
-                                },
-                                "total_items": {
-                                    "type": "number"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    },
-                    "500": {
-                        "description": "Server Error"
-                    }
-                },
-                "summary": "Fetch all Tasks by its userId",
-                "tags": ["Tasks"]
-            }
+          }, 
+          "type": "object"
+        }, 
+        "email": {
+          "type": "string"
+        }, 
+        "id": {
+          "type": "integer"
+        }, 
+        "name": {
+          "type": "string"
+        }, 
+        "phone": {
+          "type": "string"
+        }, 
+        "username": {
+          "type": "string"
+        }, 
+        "website": {
+          "type": "string"
         }
-    },
-    "swagger": "2.0"
+      }, 
+      "type": "object"
+    }
+  }, 
+  "info": {
+    "description": "powered by Flasgger", 
+    "termsOfService": "/tos", 
+    "title": "A swagger API", 
+    "version": "0.0.1"
+  }, 
+  "paths": {
+    "/tasks": {
+      "get": {
+        "parameters": [
+          {
+            "description": "fetch Tasks based on their completed status", 
+            "in": "query", 
+            "name": "completed", 
+            "type": "boolean"
+          }, 
+          {
+            "description": "fetch Tasks based on if the title contais a certain value", 
+            "in": "query", 
+            "name": "title", 
+            "type": "string"
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "Array with all Tasks that matches the conditions", 
+            "schema": {
+              "properties": {
+                "data": {
+                  "items": {
+                    "$ref": "#/definitions/Task"
+                  }, 
+                  "type": "array"
+                }, 
+                "total_items": {
+                  "type": "number"
+                }
+              }
+            }
+          }, 
+          "400": {
+            "description": "Bad request"
+          }, 
+          "500": {
+            "description": "Server Error"
+          }
+        }, 
+        "summary": "Returns all Tasks", 
+        "tags": [
+          "Tasks"
+        ]
+      }
+    }, 
+    "/tasks/{taskId}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "taskId to fetch", 
+            "in": "path", 
+            "name": "taskId", 
+            "required": true, 
+            "type": "number"
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "Task Object", 
+            "schema": {
+              "$ref": "#/definitions/Task"
+            }
+          }, 
+          "400": {
+            "description": "Bad request"
+          }, 
+          "404": {
+            "description": "Task not found"
+          }, 
+          "500": {
+            "description": "Server Error"
+          }
+        }, 
+        "summary": "Fetch one Task by its ID", 
+        "tags": [
+          "Tasks"
+        ]
+      }
+    }, 
+    "/users": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Array with all users", 
+            "schema": {
+              "properties": {
+                "data": {
+                  "items": {
+                    "$ref": "#/definitions/User"
+                  }, 
+                  "type": "array"
+                }, 
+                "total_items": {
+                  "type": "number"
+                }
+              }
+            }
+          }, 
+          "500": {
+            "description": "Server Error"
+          }
+        }, 
+        "summary": "Returns all Users", 
+        "tags": [
+          "Users"
+        ]
+      }
+    }, 
+    "/users/{userId}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "userId to fetch", 
+            "in": "path", 
+            "name": "userId", 
+            "required": true, 
+            "type": "number"
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "User Object", 
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }, 
+          "400": {
+            "description": "Bad request"
+          }, 
+          "404": {
+            "description": "User not found"
+          }, 
+          "500": {
+            "description": "Server Error"
+          }
+        }, 
+        "summary": "Fetch one User by its ID", 
+        "tags": [
+          "Users"
+        ]
+      }
+    }, 
+    "/users/{userId}/tasks": {
+      "get": {
+        "parameters": [
+          {
+            "description": "userId to fetch Tasks from", 
+            "in": "path", 
+            "name": "userId", 
+            "required": true, 
+            "type": "number"
+          }, 
+          {
+            "description": "fetch Tasks based on their completed status", 
+            "in": "query", 
+            "name": "completed", 
+            "type": "boolean"
+          }, 
+          {
+            "description": "fetch Tasks based on if the title contais a certain value", 
+            "in": "query", 
+            "name": "title", 
+            "type": "string"
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "All Tasks that have the given userId", 
+            "schema": {
+              "properties": {
+                "data": {
+                  "items": {
+                    "$ref": "#/definitions/Task"
+                  }, 
+                  "type": "array"
+                }, 
+                "total_items": {
+                  "type": "number"
+                }
+              }
+            }
+          }, 
+          "400": {
+            "description": "Bad request"
+          }, 
+          "500": {
+            "description": "Server Error"
+          }
+        }, 
+        "summary": "Fetch all Tasks by its userId", 
+        "tags": [
+          "Tasks"
+        ]
+      }
+    }
+  }, 
+  "swagger": "2.0"
 }

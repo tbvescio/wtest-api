@@ -9,13 +9,11 @@ parameters:
       type: number
       description:  userId to fetch Tasks from
     - name: completed
-      in: path
-      required: false
+      in: query
       type: boolean
       description: fetch Tasks based on their completed status
     - name: title
-      in: path
-      required: false
+      in: query
       type: string
       description: fetch Tasks based on if the title contais a certain value
 responses:
